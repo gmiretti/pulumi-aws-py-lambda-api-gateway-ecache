@@ -1,8 +1,8 @@
 # Copyright 2016-2018, Pulumi Corporation.  All rights reserved.
+from pulumi_aws import iam
 
-from pulumi_aws import config, iam
-
-lambda_role = iam.Role('lambdaRole',
+lambda_role = iam.Role(
+    'lambdaRole',
     assume_role_policy="""{
         "Version": "2012-10-17",
         "Statement": [
@@ -18,7 +18,8 @@ lambda_role = iam.Role('lambdaRole',
     }"""
 )
 
-lambda_role_policy = iam.RolePolicy('lambdaRolePolicy',
+lambda_role_policy = iam.RolePolicy(
+    'lambdaRolePolicy',
     role=lambda_role.id,
     policy="""{
         "Version": "2012-10-17",
@@ -32,4 +33,10 @@ lambda_role_policy = iam.RolePolicy('lambdaRolePolicy',
             "Resource": "arn:aws:logs:*:*:*"
         }]
     }"""
+)
+
+lamdba_vpc_enabled = iam.RolePolicyAttachment(
+    'lamdba_vpc_enabled',
+    role=lambda_role.id,
+    policy_arn="arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole" 
 )

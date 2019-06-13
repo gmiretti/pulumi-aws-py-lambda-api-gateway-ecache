@@ -1,2 +1,4 @@
-pulumi>=0.16.4
-pulumi_aws>=0.16.2
+pulumi
+pulumi_aws
+redis
+boto3
